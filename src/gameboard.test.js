@@ -16,3 +16,13 @@ test('verify space occupation status', () => {
   expect(playerBoard.getSpace(3, 2).empty).toBeFalsy();
   expect(playerBoard.getSpace(3, 1).occupiedBy).toBe('Player');
 });
+
+test('generate fleet', () => {
+  const playerBoard = Gameboard('player');
+  playerBoard.generateFleet();
+  const cpuBoard = Gameboard('cpu');
+  cpuBoard.generateFleet();
+
+  console.log(playerBoard);
+  console.log(cpuBoard);
+});
