@@ -3,6 +3,7 @@ import Ship from './ship';
 const Gameboard = (boardOwner) => {
   const owner = boardOwner;
   const board = [];
+  const ships = [];
   const missedShots = [];
 
   for (let i = 0; i < 10; i += 1) {
@@ -21,6 +22,16 @@ const Gameboard = (boardOwner) => {
     return false;
   };
 
+  // Retrieves ship object from fleet
+  const getShip = (shipName) => {
+    for (let i = 0; i < ships.length; i += 1) {
+      if (ships[i].name === shipName) {
+        return ships[i];
+      }
+    }
+    return false;
+  };
+
   // Places ship on board
   const placeShip = (ship) => {
     for (let i = 0; i < ship.coords.length; i += 1) {
@@ -29,6 +40,41 @@ const Gameboard = (boardOwner) => {
       getSpace(x, y).empty = false;
       getSpace(x, y).occupiedBy = ship.name;
     }
+    ships.push(ship);
+  };
+
+  // Receives an attack and adjusts board accordingly
+  const receiveAttack = (xCoord, yCoord) => {
+    if (getSpace(xCoord, yCoord).empty) {
+      getSpace(xCoord, yCoord).occupiedBy = 'missed';
+      getSpace(xCoord, yCoord).empty = false;
+      missedShots.push([xCoord, yCoord]);
+    } else if (
+      !getSpace(xCoord, yCoord).empty &&
+      getSpace(xCoord, yCoord).occupiedBy !== 'missed'
+    ) {
+      const hitShip = getSpace(xCoord, yCoord).occupiedBy;
+      getShip(hitShip).hit([xCoord, yCoord]);
+      if (getShip(hitShip).isSunk()) {
+        getShip(hitShip).sunk = true;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  // Checks if fleet has been sunk
+  const allSunk = () => {
+    if (
+      ships[0].sunk &&
+      ships[1].sunk &&
+      ships[2].sunk &&
+      ships[3].sunk &&
+      ships[4].sunk
+    ) {
+      return true;
+    }
+    return false;
   };
 
   // Generates a random coordinate
@@ -128,10 +174,12 @@ const Gameboard = (boardOwner) => {
     let slicedArr =
       potentialArray[Math.floor(Math.random() * potentialArray.length)];
 
+    // Run the function again if no coordinates work
     if (slicedArr) {
       slicedArr = slicedArr.slice(0, shipLength);
     } else {
-      return generateFleet();
+      const errorCoords = randomStartingCoords();
+      return randomTotalCoords(errorCoords, shipLength);
     }
 
     return slicedArr;
@@ -165,7 +213,15 @@ const Gameboard = (boardOwner) => {
     placeShip(patrol);
   };
 
-  return { owner, board, getSpace, generateFleet };
+  return {
+    owner,
+    board,
+    getSpace,
+    generateFleet,
+    receiveAttack,
+    ships,
+    allSunk,
+  };
 };
 
 export default Gameboard;
