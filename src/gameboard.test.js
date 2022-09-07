@@ -22,7 +22,30 @@ test('generate fleet', () => {
   playerBoard.generateFleet();
   const cpuBoard = Gameboard('cpu');
   cpuBoard.generateFleet();
+});
 
+test('verify ship collection', () => {
+  const playerBoard = Gameboard('player');
+  playerBoard.generateFleet();
+  expect(playerBoard.ships.length).toBe(5);
+});
+
+test('receive shot', () => {
+  const playerBoard = Gameboard('playerBoard');
+  playerBoard.generateFleet();
+  playerBoard.receiveAttack(9, 3);
+  expect(playerBoard.getSpace(9, 3).empty).toBeFalsy();
+});
+
+test('sink all ships', () => {
+  const playerBoard = Gameboard('player');
+  playerBoard.generateFleet();
+
+  for (let i = 0; i < 10; i += 1) {
+    for (let j = 0; j < 10; j += 1) {
+      playerBoard.receiveAttack(i, j);
+    }
+  }
   console.log(playerBoard);
-  console.log(cpuBoard);
+  expect(playerBoard.allSunk()).toBeTruthy();
 });
