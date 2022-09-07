@@ -11,9 +11,9 @@ const Ship = (shipName, shipCoords, shipLength) => {
 
   const isSunk = () => {
     if (hitArray.length === length) {
-      sunk = true;
+      return true;
     }
-    return sunk;
+    return false;
   };
 
   return { name, coords, length, hitArray, sunk, hit, isSunk };
