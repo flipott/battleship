@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log(((t,n,s)=>{const e=s,o=[];let r=!1;return{name:t,coords:n,length:e,hitArray:o,sunk:r,hit:t=>{o.push(t)},isSunk:()=>(o.length===e&&(r=!0),r)}})())})();
+(()=>{"use strict";console.log(((n,s,t)=>{const e=t,o=[];return{name:n,coords:s,length:e,hitArray:o,sunk:!1,hit:n=>{o.push(n)},isSunk:()=>o.length===e}})())})();
