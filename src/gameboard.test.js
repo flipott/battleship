@@ -46,6 +46,5 @@ test('sink all ships', () => {
       playerBoard.receiveAttack(i, j);
     }
   }
-  console.log(playerBoard);
   expect(playerBoard.allSunk()).toBeTruthy();
 });
