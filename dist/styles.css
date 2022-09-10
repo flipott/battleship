@@ -1,0 +1,14 @@
+.player-board {
+  display: grid;
+  /* grid-template-rows: repeat(10, 1fr); */
+  grid-template-columns: repeat(10, 1fr);
+  width: min-content;
+}
+
+.space {
+  height: 50px;
+  width: 50px;
+  background: blue;
+  border: solid 1px black;
+  color: white;
+}
