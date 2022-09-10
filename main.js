@@ -1,1 +1,0 @@
-(()=>{"use strict";console.log(((n,s,t)=>{const e=t,o=[];return{name:n,coords:s,length:e,hitArray:o,sunk:!1,hit:n=>{o.push(n)},isSunk:()=>o.length===e}})())})();
