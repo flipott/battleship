@@ -3,7 +3,7 @@ const Ship = (shipName, shipCoords, shipLength) => {
   const coords = shipCoords;
   const length = shipLength;
   const hitArray = [];
-  let sunk = false;
+  const sunk = false;
 
   const hit = (hitCoords) => {
     hitArray.push(hitCoords);
