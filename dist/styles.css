@@ -1,14 +1,28 @@
-.player-board {
+.game-container {
+  display: flex;
+  gap: 50px;
+}
+
+.player-board,
+.cpu-board {
   display: grid;
   /* grid-template-rows: repeat(10, 1fr); */
   grid-template-columns: repeat(10, 1fr);
-  width: min-content;
+  width: fit-content;
 }
 
 .space {
   height: 50px;
   width: 50px;
-  background: blue;
+  background: green;
   border: solid 1px black;
   color: white;
+}
+
+.space:not([occupiedby='null']) {
+  background: blue;
+}
+
+.space[occupiedby='missed'] {
+  background: yellow;
 }
