@@ -6,9 +6,9 @@ const Gameboard = (boardOwner) => {
   const ships = [];
   const missedShots = [];
 
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 9; i >= 0; i -= 1) {
     for (let j = 0; j < 10; j += 1) {
-      board.push({ x: i, y: j, empty: true, occupiedBy: null });
+      board.push({ x: j, y: i, empty: true, occupiedBy: null });
     }
   }
 
