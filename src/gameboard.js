@@ -15,7 +15,7 @@ const Gameboard = (boardOwner) => {
   // Retrieves space on board
   const getSpace = (xCoord, yCoord) => {
     for (let i = 0; i < board.length; i += 1) {
-      if (board[i].x === xCoord && board[i].y === yCoord) {
+      if (board[i].x == xCoord && board[i].y == yCoord) {
         return board[i];
       }
     }
@@ -53,11 +53,12 @@ const Gameboard = (boardOwner) => {
       !getSpace(xCoord, yCoord).empty &&
       getSpace(xCoord, yCoord).occupiedBy !== 'missed'
     ) {
-      const hitShip = getSpace(xCoord, yCoord).occupiedBy;
-      getShip(hitShip).hit([xCoord, yCoord]);
-      if (getShip(hitShip).isSunk()) {
-        getShip(hitShip).sunk = true;
-      }
+      console.log(getSpace(xCoord, yCoord));
+      // const hitShip = getSpace(xCoord, yCoord).occupiedBy;
+      // getShip(hitShip).hit([xCoord, yCoord]);
+      // if (getShip(hitShip).isSunk()) {
+      //   getShip(hitShip).sunk = true;
+      // }
     } else {
       return false;
     }
