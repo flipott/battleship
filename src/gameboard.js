@@ -1,4 +1,4 @@
-import Ship from './ship';
+import Ship from './ship.js';
 
 const Gameboard = (boardOwner) => {
   const owner = boardOwner;
@@ -8,7 +8,13 @@ const Gameboard = (boardOwner) => {
 
   for (let i = 9; i >= 0; i -= 1) {
     for (let j = 0; j < 10; j += 1) {
-      board.push({ x: j, y: i, empty: true, occupiedBy: null });
+      board.push({
+        x: j,
+        y: i,
+        empty: true,
+        occupiedBy: null,
+        hitStatus: null,
+      });
     }
   }
 
@@ -45,6 +51,8 @@ const Gameboard = (boardOwner) => {
 
   // Receives an attack and adjusts board accordingly
   const receiveAttack = (xCoord, yCoord) => {
+    console.log(getSpace(xCoord, yCoord));
+
     if (getSpace(xCoord, yCoord).empty) {
       getSpace(xCoord, yCoord).occupiedBy = 'missed';
       getSpace(xCoord, yCoord).empty = false;
@@ -53,12 +61,14 @@ const Gameboard = (boardOwner) => {
       !getSpace(xCoord, yCoord).empty &&
       getSpace(xCoord, yCoord).occupiedBy !== 'missed'
     ) {
-      console.log(getSpace(xCoord, yCoord));
-      // const hitShip = getSpace(xCoord, yCoord).occupiedBy;
-      // getShip(hitShip).hit([xCoord, yCoord]);
-      // if (getShip(hitShip).isSunk()) {
-      //   getShip(hitShip).sunk = true;
-      // }
+      const hitShip = getSpace(xCoord, yCoord).occupiedBy;
+      getShip(hitShip).hit([xCoord, yCoord]);
+      getSpace(xCoord, yCoord).hitStatus = 'hit';
+
+      if (getShip(hitShip).isSunk()) {
+        getShip(hitShip).sunk = true;
+      }
+      return true;
     } else {
       return false;
     }

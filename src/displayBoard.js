@@ -15,6 +15,7 @@ const DisplayBoard = (playerBoard, playerType) => {
       playerDiv.appendChild(space);
     }
   } else if (playerType === 'cpu') {
+    console.log('YEP');
     cpuDiv.innerHTML = '';
 
     for (let i = 0; i < playerBoard.length; i += 1) {
@@ -22,7 +23,15 @@ const DisplayBoard = (playerBoard, playerType) => {
       space.className = 'space';
       space.setAttribute('x', playerBoard[i].x);
       space.setAttribute('y', playerBoard[i].y);
-      space.setAttribute('occupiedBy', null);
+
+      if (playerBoard[i].occupiedBy === 'missed') {
+        space.setAttribute('occupiedBy', 'missed');
+      }
+
+      if (playerBoard[i].hitStatus === 'hit') {
+        space.setAttribute('hitStatus', 'hit');
+      }
+
       space.setAttribute('empty', null);
       cpuDiv.appendChild(space);
     }

@@ -19,10 +19,18 @@
   color: white;
 }
 
-.space:not([occupiedby='null']) {
+.player-board .space:not([occupiedby='null']) {
   background: blue;
+}
+
+.space[occupiedby='hit'] {
+  background: red;
 }
 
 .space[occupiedby='missed'] {
   background: yellow;
+}
+
+.space[hitstatus='hit'] {
+  background: red;
 }

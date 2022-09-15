@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import Player from './player';
+import Player from './player.js';
 
 test('get player properties', () => {
   const player = Player('Joe', 'human');

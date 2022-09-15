@@ -6,7 +6,12 @@ const Ship = (shipName, shipCoords, shipLength) => {
   const sunk = false;
 
   const hit = (hitCoords) => {
-    hitArray.push(hitCoords);
+    for (let i = 0; i < hitArray.length; i += 1) {
+      if (hitArray[i][0] === hitCoords[0] && hitArray[i][1] === hitCoords[1]) {
+        return false;
+      }
+    }
+    return hitArray.push(hitCoords);
   };
 
   const isSunk = () => {

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import Ship from './ship';
+import Ship from './ship.js';
 
 test('get ship properties', () => {
   const destroyer = Ship('destroyer', [3, 2], 3);

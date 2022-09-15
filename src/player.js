@@ -1,4 +1,4 @@
-import Gameboard from './gameboard';
+import Gameboard from './gameboard.js';
 
 const Player = (playerName, playerType) => {
   const name = playerName;
