@@ -7,11 +7,18 @@ const Player = (playerName, playerType) => {
   const sentAttacks = [];
 
   function receiveAttack(xCoord, yCoord) {
-    try {
-      board.receiveAttack(xCoord, yCoord);
-    } catch (error) {
-      console.log(error);
+    return board.receiveAttack(xCoord, yCoord);
+  }
+
+  function sendAttack(x, y) {
+    for (let i = 0; i < sentAttacks.length; i += 1) {
+      if (sentAttacks[i][0] === x && sentAttacks[i][1] === y) {
+        console.log('You already chose this space.');
+        return false;
+      }
     }
+    sentAttacks.push([x, y]);
+    return true;
   }
 
   function sendRandomAttack() {
@@ -45,7 +52,15 @@ const Player = (playerName, playerType) => {
     return randomCoords;
   }
 
-  return { name, type, board, receiveAttack, sendRandomAttack, sentAttacks };
+  return {
+    name,
+    type,
+    board,
+    receiveAttack,
+    sendRandomAttack,
+    sentAttacks,
+    sendAttack,
+  };
 };
 
 export default Player;

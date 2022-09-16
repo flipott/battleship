@@ -51,26 +51,30 @@ const Gameboard = (boardOwner) => {
 
   // Receives an attack and adjusts board accordingly
   const receiveAttack = (xCoord, yCoord) => {
-    console.log(getSpace(xCoord, yCoord));
+    let returnStr = '';
 
     if (getSpace(xCoord, yCoord).empty) {
       getSpace(xCoord, yCoord).occupiedBy = 'missed';
       getSpace(xCoord, yCoord).empty = false;
       missedShots.push([xCoord, yCoord]);
-    } else if (
+      return 'missed';
+    }
+
+    if (
       !getSpace(xCoord, yCoord).empty &&
       getSpace(xCoord, yCoord).occupiedBy !== 'missed'
     ) {
       const hitShip = getSpace(xCoord, yCoord).occupiedBy;
       getShip(hitShip).hit([xCoord, yCoord]);
       getSpace(xCoord, yCoord).hitStatus = 'hit';
+      let hitStr = `hit`;
 
       if (getShip(hitShip).isSunk()) {
         getShip(hitShip).sunk = true;
+        hitStr += 'and sunk';
       }
-      return true;
-    } else {
-      return false;
+
+      return hitStr;
     }
   };
 
