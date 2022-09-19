@@ -41,3 +41,13 @@
   height: 500px;
   overflow: scroll;
 }
+
+.ships {
+  display: flex;
+  gap: 50px;
+  user-select: none;
+}
+
+.player .ships {
+  cursor: pointer;
+}
