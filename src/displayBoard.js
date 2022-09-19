@@ -1,5 +1,6 @@
 const playerDiv = document.querySelector('.player-board');
 const cpuDiv = document.querySelector('.cpu-board');
+const resultDiv = document.querySelector('.results');
 
 const Display = {
   displayBoard(playerBoard, playerType) {
@@ -40,19 +41,21 @@ const Display = {
       }
     }
   },
-  displayResult(player, result) {
-    console.log('WHAT');
-    // switch (result) {
-    //   case 'missed':
-    //     console.log(`${player.name}'s shot missed.`);
-    //     break;
-    //   case 'hit':
-    //     console.log('hit');
-    //     break;
-    //   default:
-    //     console.log('WHAT');
-    //     break;
-    // }
+  displayResult(player, opponent, result) {
+    switch (result[0]) {
+      case 'missed':
+        resultDiv.innerHTML += `${player} attacks ${opponent} and misses.<br>`;
+        break;
+      case 'hit':
+        resultDiv.innerHTML += `${player} attacks and hits ${opponent}'s ${result[1]}.<br>`;
+        break;
+      case 'sunk':
+        resultDiv.innerHTML += `${player} attacks and sinks ${opponent}'s ${result[1]}!<br>`;
+        break;
+      default:
+        console.log('Invalid move.');
+        break;
+    }
   },
 };
 
