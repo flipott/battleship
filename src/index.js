@@ -57,7 +57,8 @@ function checkWinner(player, opponent) {
 function opponentMove() {
   const coords = cpu.sendRandomAttack();
   cpuMoves.push(coords);
-  player.receiveAttack(coords[0], coords[1]);
+  const result = player.receiveAttack(coords[0], coords[1]);
+  Display.displayResult(cpu.name, player.name, result);
   Display.displayBoard(player.board.board, player.type);
   checkWinner(cpu, player);
 }
@@ -66,7 +67,7 @@ function playerMove(x, y) {
   if (!winner) {
     if (player.sendAttack(x, y)) {
       const result = cpu.receiveAttack(x, y);
-      Display.displayResult(player.name, result);
+      Display.displayResult(player.name, cpu.name, result);
       Display.displayBoard(cpu.board.board, cpu.type);
       if (!checkWinner(player, cpu)) {
         spaces = document.getElementsByClassName('space');
