@@ -4,19 +4,38 @@ import Player from './player.js';
 import Display from './displayBoard.js';
 
 const startButton = document.getElementById('game-start');
+const htmlShips = document.querySelector('.player .ships').children;
 let winner = null;
 let cpu = Player('CPU', 'cpu');
 cpu.board.generateFleet();
 let player = Player('Player', 'human');
-player.board.generateFleet();
-
-// let cpuMoves = [];
+// player.board.generateFleet();
 
 Display.displayBoard(player.board.board, player.type);
 Display.displayBoard(cpu.board.board, cpu.type);
 
 let spaces = document.getElementsByClassName('space');
 
+let htmlSelection = null;
+let direction = 'vertical';
+
+for (let i = 0; i < htmlShips.length; i += 1) {
+  htmlShips[i].addEventListener('click', () => {
+    htmlSelection = htmlShips[i].innerText;
+    console.log(htmlSelection);
+  });
+}
+
+for (let i = 100; i < 200; i += 1) {
+  spaces[i].addEventListener('click', (e) => {
+    const coords = [
+      parseInt(e.target.getAttribute('x'), 10),
+      parseInt(e.target.getAttribute('y'), 10),
+    ];
+    player.board.manuallyPlaceShip(htmlSelection, coords, direction);
+  });
+}
+// let cpuMoves = [];
 function init() {
   winner = null;
 
