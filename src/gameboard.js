@@ -21,7 +21,7 @@ const Gameboard = (boardOwner) => {
   // Retrieves space on board
   const getSpace = (xCoord, yCoord) => {
     for (let i = 0; i < board.length; i += 1) {
-      if (board[i].x == xCoord && board[i].y == yCoord) {
+      if (board[i].x === xCoord && board[i].y === yCoord) {
         return board[i];
       }
     }

@@ -6,24 +6,29 @@ const Player = (playerName, playerType) => {
   const board = Gameboard(name);
   const sentAttacks = [];
 
+  // Receives attack coordinates to send to board
   function receiveAttack(xCoord, yCoord) {
     return board.receiveAttack(xCoord, yCoord);
   }
 
+  // Adds requested attack to array if valid
   function sendAttack(x, y) {
+    // If space has already been selected, return false
     for (let i = 0; i < sentAttacks.length; i += 1) {
       if (sentAttacks[i][0] === x && sentAttacks[i][1] === y) {
-        console.log('You already chose this space.');
         return false;
       }
     }
+
     sentAttacks.push([x, y]);
     return true;
   }
 
-  function sendRandomAttack() {
+  // Returns random coordinates to attack
+  function getRandomCoords() {
     let randomCoords = null;
 
+    // Makes sure random coordinates are valid
     function verifyNotAttacked(x, y) {
       let verify = true;
 
@@ -57,7 +62,7 @@ const Player = (playerName, playerType) => {
     type,
     board,
     receiveAttack,
-    sendRandomAttack,
+    getRandomCoords,
     sentAttacks,
     sendAttack,
   };
