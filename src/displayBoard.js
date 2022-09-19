@@ -3,6 +3,7 @@ const cpuDiv = document.querySelector('.cpu-board');
 const resultDiv = document.querySelector('.results');
 
 const Display = {
+  // Generates HTML board
   displayBoard(playerBoard, playerType) {
     if (playerType === 'human') {
       playerDiv.innerHTML = '';
@@ -41,6 +42,7 @@ const Display = {
       }
     }
   },
+  // Displays HTML results
   displayResult(player, opponent, result) {
     switch (result[0]) {
       case 'missed':
@@ -52,10 +54,17 @@ const Display = {
       case 'sunk':
         resultDiv.innerHTML += `${player} attacks and sinks ${opponent}'s ${result[1]}!<br>`;
         break;
+      case 'winner':
+        resultDiv.innerHTML += `${player} sinks ${opponent}'s fleet and wins!`;
+        break;
       default:
         console.log('Invalid move.');
         break;
     }
+  },
+  // Clears HTML results
+  clearResults() {
+    resultDiv.innerHTML = '';
   },
 };
 
