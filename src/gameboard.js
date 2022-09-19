@@ -198,6 +198,55 @@ const Gameboard = (boardOwner) => {
     return slicedArr;
   }
 
+  const manuallyPlaceShip = (shipName, coords, direction) => {
+    let length = null;
+    let totalCoords = [coords];
+    const name = shipName.charAt(0).toLowerCase() + shipName.slice(1);
+
+    switch (name) {
+      case 'carrier':
+        length = 5;
+        break;
+      case 'battleship':
+        length = 4;
+        break;
+      case 'destroyer':
+        length = 3;
+        break;
+      case 'submarine':
+        length = 3;
+        break;
+      case 'patrol':
+        length = 2;
+        break;
+      default:
+    }
+
+    if (direction === 'vertical') {
+      let startingY = coords[1];
+      for (let i = 1; i < length; i += 1) {
+        totalCoords.push([coords[0], startingY - 1]);
+        startingY -= 1;
+      }
+    }
+
+    for (let i = 0; i < totalCoords.length; i += 1) {
+      let x = totalCoords[i][0];
+      let y = totalCoords[i][1];
+      if (
+        !getSpace(x, y).empty ||
+        !getSpace(x, y - 1).empty ||
+        !getSpace(x, y - 2).empty ||
+        !getSpace(x, y - 3).empty ||
+        !getSpace(x, y - 4).empty
+      ) {
+        console.log('WRONG!');
+      }
+    }
+
+    console.log(name, length, totalCoords);
+  };
+
   // Randomly generates and places a fleet on board
   const generateFleet = () => {
     const carrierStart = randomStartingCoords();
@@ -232,6 +281,7 @@ const Gameboard = (boardOwner) => {
     getSpace,
     generateFleet,
     receiveAttack,
+    manuallyPlaceShip,
     ships,
     allSunk,
   };
