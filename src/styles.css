@@ -34,3 +34,10 @@
 .space[hitstatus='hit'] {
   background: red !important;
 }
+
+.results {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 500px;
+  overflow: scroll;
+}
