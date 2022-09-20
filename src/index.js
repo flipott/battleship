@@ -5,6 +5,9 @@ import Display from './displayBoard.js';
 
 const startButton = document.getElementById('game-start');
 const htmlShips = document.querySelector('.player .ships').children;
+const directionChange = document.getElementById('direction-btn');
+const directionSpan = document.getElementById('direction');
+
 let winner = null;
 let cpu = Player('CPU', 'cpu');
 cpu.board.generateFleet();
@@ -18,23 +21,53 @@ let spaces = document.getElementsByClassName('space');
 
 let htmlSelection = null;
 let direction = 'vertical';
+let shipsPlaced = false;
 
-for (let i = 0; i < htmlShips.length; i += 1) {
-  htmlShips[i].addEventListener('click', () => {
-    htmlSelection = htmlShips[i].innerText;
-    console.log(htmlSelection);
-  });
+directionChange.addEventListener('click', () => {
+  if (direction === 'vertical') {
+    direction = 'horizontal';
+    directionSpan.innerHTML = 'Horizontal';
+  } else {
+    direction = 'vertical';
+    directionSpan.innerHTML = 'Vertical';
+  }
+
+  console.log(direction);
+});
+
+function manualPlacement() {
+  if (player.board.ships.length === 5) {
+    return;
+  }
+
+  for (let i = 0; i < htmlShips.length; i += 1) {
+    htmlShips[i].addEventListener('click', () => {
+      htmlSelection = htmlShips[i].innerText;
+      htmlSelection =
+        htmlSelection.charAt(0).toLowerCase() + htmlSelection.slice(1);
+      Display.shipHighlight(htmlSelection, 'select');
+    });
+  }
+
+  for (let i = 100; i < 200; i += 1) {
+    spaces[i].addEventListener('click', (e) => {
+      const coords = [
+        parseInt(e.target.getAttribute('x'), 10),
+        parseInt(e.target.getAttribute('y'), 10),
+      ];
+      if (htmlSelection) {
+        if (player.board.manuallyPlaceShip(htmlSelection, coords, direction)) {
+          Display.shipHighlight(htmlSelection, 'deselect');
+          Display.displayBoard(player.board.board, player.type);
+          manualPlacement();
+        }
+      }
+    });
+  }
 }
 
-for (let i = 100; i < 200; i += 1) {
-  spaces[i].addEventListener('click', (e) => {
-    const coords = [
-      parseInt(e.target.getAttribute('x'), 10),
-      parseInt(e.target.getAttribute('y'), 10),
-    ];
-    player.board.manuallyPlaceShip(htmlSelection, coords, direction);
-  });
-}
+manualPlacement();
+
 // let cpuMoves = [];
 function init() {
   winner = null;
