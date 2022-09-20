@@ -198,9 +198,10 @@ const Gameboard = (boardOwner) => {
     return slicedArr;
   }
 
+  // Place ships manually based on space selection
   const manuallyPlaceShip = (shipName, coords, direction) => {
     let length = null;
-    let totalCoords = [coords];
+    const totalCoords = [coords];
     const name = shipName.charAt(0).toLowerCase() + shipName.slice(1);
 
     switch (name) {
@@ -228,23 +229,32 @@ const Gameboard = (boardOwner) => {
         totalCoords.push([coords[0], startingY - 1]);
         startingY -= 1;
       }
-    }
-
-    for (let i = 0; i < totalCoords.length; i += 1) {
-      let x = totalCoords[i][0];
-      let y = totalCoords[i][1];
-      if (
-        !getSpace(x, y).empty ||
-        !getSpace(x, y - 1).empty ||
-        !getSpace(x, y - 2).empty ||
-        !getSpace(x, y - 3).empty ||
-        !getSpace(x, y - 4).empty
-      ) {
-        console.log('WRONG!');
+    } else {
+      let startingX = coords[0];
+      for (let i = 1; i < length; i += 1) {
+        totalCoords.push([startingX + 1, coords[1]]);
+        startingX += 1;
       }
     }
 
-    console.log(name, length, totalCoords);
+    for (let i = 0; i < totalCoords.length; i += 1) {
+      const x = totalCoords[i][0];
+      const y = totalCoords[i][1];
+
+      if (!getSpace(x, y).empty) {
+        return false;
+      }
+    }
+
+    for (let i = 0; i < ships.length; i += 1) {
+      if (ships[i].name === name) {
+        return false;
+      }
+    }
+
+    const ship = Ship(name, totalCoords, length);
+    placeShip(ship);
+    return true;
   };
 
   // Randomly generates and places a fleet on board
