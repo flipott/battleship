@@ -1,6 +1,7 @@
 const playerDiv = document.querySelector('.player-board');
 const cpuDiv = document.querySelector('.cpu-board');
 const resultDiv = document.querySelector('.results');
+const htmlShips = document.querySelector('.player .ships');
 
 const Display = {
   // Generates HTML board
@@ -65,6 +66,25 @@ const Display = {
   // Clears HTML results
   clearResults() {
     resultDiv.innerHTML = '';
+  },
+  shipHighlight(shipName, highlight) {
+    const selectedShip = document.querySelector('.player .' + shipName);
+
+    if (highlight === 'select') {
+      for (let i = 0; i < htmlShips.children.length; i += 1) {
+        if (htmlShips.children[i].classList.contains('select')) {
+          htmlShips.children[i].classList.remove('select');
+        }
+      }
+      if (!selectedShip.classList.contains('deselect')) {
+        selectedShip.classList.add('select');
+      }
+    } else if (highlight === 'deselect') {
+      if (selectedShip.classList.contains('select')) {
+        selectedShip.classList.remove('select');
+      }
+      selectedShip.classList.add('deselect');
+    }
   },
 };
 
