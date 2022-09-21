@@ -64,6 +64,16 @@ function manualPlacement() {
   }
 
   for (let i = 100; i < 200; i += 1) {
+    if (htmlSelection) {
+      spaces[i].addEventListener('mouseover', (e) => {
+        const hoverCoords = [
+          parseInt(e.target.getAttribute('x'), 10),
+          parseInt(e.target.getAttribute('y'), 10),
+        ];
+        console.log(hoverCoords);
+      });
+    }
+
     spaces[i].addEventListener('click', (e) => {
       if (randomFlag === false) {
         const coords = [
@@ -76,6 +86,7 @@ function manualPlacement() {
           ) {
             Display.shipHighlight(htmlSelection, 'deselect');
             Display.displayBoard(player.board.board, player.type);
+            htmlSelection = null;
             manualPlacement();
           }
         }
