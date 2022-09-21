@@ -6,17 +6,21 @@ const Gameboard = (boardOwner) => {
   const ships = [];
   const missedShots = [];
 
-  for (let i = 9; i >= 0; i -= 1) {
-    for (let j = 0; j < 10; j += 1) {
-      board.push({
-        x: j,
-        y: i,
-        empty: true,
-        occupiedBy: null,
-        hitStatus: null,
-      });
+  function drawBoard() {
+    for (let i = 9; i >= 0; i -= 1) {
+      for (let j = 0; j < 10; j += 1) {
+        board.push({
+          x: j,
+          y: i,
+          empty: true,
+          occupiedBy: null,
+          hitStatus: null,
+        });
+      }
     }
   }
+
+  drawBoard();
 
   // Retrieves space on board
   const getSpace = (xCoord, yCoord) => {
@@ -259,6 +263,15 @@ const Gameboard = (boardOwner) => {
 
   // Randomly generates and places a fleet on board
   const generateFleet = () => {
+    while (board.length) {
+      board.pop();
+    }
+    while (ships.length) {
+      ships.pop();
+    }
+
+    drawBoard();
+
     const carrierStart = randomStartingCoords();
     const carrierCoords = randomTotalCoords(carrierStart, 5);
     const carrier = Ship('carrier', carrierCoords, 5);
