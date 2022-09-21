@@ -2,6 +2,8 @@ const playerDiv = document.querySelector('.player-board');
 const cpuDiv = document.querySelector('.cpu-board');
 const resultDiv = document.querySelector('.results');
 const htmlShips = document.querySelector('.player .ships');
+const instructions = document.querySelector('.player-instruction');
+const randomBtn = document.getElementById('random-board');
 
 const Display = {
   // Generates HTML board
@@ -68,6 +70,24 @@ const Display = {
     resultDiv.innerHTML = '';
   },
   shipHighlight(shipName, highlight) {
+    if (shipName === 'reset') {
+      for (let i = 0; i < htmlShips.children.length; i += 1) {
+        if (htmlShips.children[i].classList.contains('select')) {
+          htmlShips.children[i].classList.remove('select');
+        }
+        if (htmlShips.children[i].classList.contains('deselect')) {
+          htmlShips.children[i].classList.remove('deselect');
+        }
+      }
+    }
+
+    if (shipName === 'all') {
+      for (let i = 0; i < htmlShips.children.length; i += 1) {
+        htmlShips.children[i].classList.add('deselect');
+      }
+      return;
+    }
+
     const selectedShip = document.querySelector('.player .' + shipName);
 
     if (highlight === 'select') {
@@ -76,7 +96,7 @@ const Display = {
           htmlShips.children[i].classList.remove('select');
         }
       }
-      if (!selectedShip.classList.contains('deselect')) {
+      if (!selectedShip.classList.contains('deselect') && shipName !== 'all') {
         selectedShip.classList.add('select');
       }
     } else if (highlight === 'deselect') {
@@ -85,6 +105,10 @@ const Display = {
       }
       selectedShip.classList.add('deselect');
     }
+  },
+  newGameMessage() {
+    instructions.innerText = 'Please position your fleet on your board.';
+    randomBtn.style.display = 'block';
   },
 };
 
