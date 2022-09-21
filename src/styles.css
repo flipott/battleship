@@ -63,3 +63,7 @@
   user-select: none;
   cursor: default;
 }
+
+#random-board {
+  display: none;
+}
