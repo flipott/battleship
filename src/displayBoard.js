@@ -110,6 +110,31 @@ const Display = {
     instructions.innerText = 'Please position your fleet on your board.';
     randomBtn.style.display = 'block';
   },
+  showHover(validity, coords) {
+    for (let i = 0; i < coords.length; i += 1) {
+      for (let j = 0; j < playerDiv.children.length; j += 1) {
+        const divX = parseInt(playerDiv.children[j].getAttribute('x'), 10);
+        const divY = parseInt(playerDiv.children[j].getAttribute('y'), 10);
+        if (coords[i][0] === divX && coords[i][1] === divY) {
+          if (validity) {
+            playerDiv.children[j].classList.add('hoverValid');
+          } else {
+            playerDiv.children[j].classList.add('hoverInvalid');
+          }
+        }
+      }
+    }
+  },
+  hideHover() {
+    for (let i = 0; i < playerDiv.children.length; i += 1) {
+      if (playerDiv.children[i].classList.contains('hoverValid')) {
+        playerDiv.children[i].classList.remove('hoverValid');
+      }
+      if (playerDiv.children[i].classList.contains('hoverInvalid')) {
+        playerDiv.children[i].classList.remove('hoverInvalid');
+      }
+    }
+  },
 };
 
 export default Display;
