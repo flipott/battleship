@@ -67,3 +67,11 @@
 #random-board {
   display: none;
 }
+
+.hoverValid {
+  background: lightblue;
+}
+
+.hoverInvalid {
+  background: lightcoral;
+}
