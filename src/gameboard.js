@@ -202,8 +202,25 @@ const Gameboard = (boardOwner) => {
     return slicedArr;
   }
 
+  // Removes nonexistent spaces from a coordinate array
+  const removeFalseSpaces = (coordArray) => {
+    const newArray = [];
+
+    for (let i = 0; i < coordArray.length; i += 1) {
+      if (
+        coordArray[i][0] >= 0 &&
+        coordArray[i][0] <= 9 &&
+        coordArray[i][1] >= 0 &&
+        coordArray[i][1] <= 9
+      ) {
+        newArray.push([coordArray[i][0], coordArray[i][1]]);
+      }
+    }
+    return newArray;
+  };
+
   // Place ships manually based on space selection
-  const manuallyPlaceShip = (shipName, coords, direction) => {
+  const manuallyPlaceShip = (shipName, coords, direction, hover = false) => {
     let length = null;
     const totalCoords = [coords];
     const name = shipName.charAt(0).toLowerCase() + shipName.slice(1);
@@ -246,6 +263,7 @@ const Gameboard = (boardOwner) => {
       const y = totalCoords[i][1];
 
       if (!getSpace(x, y).empty) {
+        // return [false, removeFalseSpaces(totalCoords)];
         return false;
       }
     }
@@ -256,9 +274,13 @@ const Gameboard = (boardOwner) => {
       }
     }
 
-    const ship = Ship(name, totalCoords, length);
-    placeShip(ship);
-    return true;
+    if (!hover) {
+      const ship = Ship(name, totalCoords, length);
+      placeShip(ship);
+      return true;
+    }
+
+    return [true, totalCoords];
   };
 
   // Randomly generates and places a fleet on board

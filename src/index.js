@@ -41,7 +41,6 @@ function manualPlacement() {
   }
 
   let randomFlag = false;
-  console.log(randomFlag);
 
   randomBtn.addEventListener('click', () => {
     randomFlag = true;
@@ -70,7 +69,21 @@ function manualPlacement() {
           parseInt(e.target.getAttribute('x'), 10),
           parseInt(e.target.getAttribute('y'), 10),
         ];
-        console.log(hoverCoords);
+        const tempHover = player.board.manuallyPlaceShip(
+          htmlSelection,
+          hoverCoords,
+          direction,
+          true
+        );
+        if (tempHover[0]) {
+          Display.showHover(tempHover[0], tempHover[1]);
+        } else {
+          Display.showHover(tempHover[0], tempHover[1]);
+        }
+      });
+
+      spaces[i].addEventListener('mouseout', (e) => {
+        Display.hideHover();
       });
     }
 
@@ -89,6 +102,18 @@ function manualPlacement() {
             htmlSelection = null;
             manualPlacement();
           }
+
+          // const playerSelect = player.board.manuallyPlaceShip(
+          //   htmlSelection,
+          //   coords,
+          //   direction
+          // );
+          // if (playerSelect[0]) {
+          //   Display.shipHighlight(htmlSelection, 'deselect');
+          //   Display.displayBoard(player.board.board, player.type);
+          //   htmlSelection = null;
+          //   manualPlacement();
+          // }
         }
       }
     });
