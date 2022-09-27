@@ -263,8 +263,8 @@ const Gameboard = (boardOwner) => {
       const y = totalCoords[i][1];
 
       if (!getSpace(x, y).empty) {
-        // return [false, removeFalseSpaces(totalCoords)];
-        return false;
+        return [false, removeFalseSpaces(totalCoords)];
+        // return false;
       }
     }
 
