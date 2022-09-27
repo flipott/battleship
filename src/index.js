@@ -34,7 +34,7 @@ directionChange.addEventListener('click', () => {
 });
 
 // Allow player to manually place ships
-function manualPlacement() {
+function manualPlacement(status = false) {
   if (player.board.ships.length === 5) {
     startButton.disabled = false;
     return;
@@ -50,20 +50,41 @@ function manualPlacement() {
     manualPlacement();
   });
 
-  for (let i = 0; i < htmlShips.length; i += 1) {
-    htmlShips[i].addEventListener('click', () => {
-      if (randomFlag === false) {
-        htmlSelection = htmlShips[i].innerText;
-        htmlSelection =
-          htmlSelection.charAt(0).toLowerCase() + htmlSelection.slice(1);
-        Display.shipHighlight(htmlSelection, 'select');
-        manualPlacement();
-      }
-    });
-  }
+  if (status === false) {
+    for (let i = 0; i < htmlShips.length; i += 1) {
+      htmlShips[i].addEventListener('click', () => {
+        if (randomFlag === false) {
+          htmlSelection = htmlShips[i].innerText;
+          htmlSelection =
+            htmlSelection.charAt(0).toLowerCase() + htmlSelection.slice(1);
+          Display.shipHighlight(htmlSelection, 'select');
+          // Display.displayBoard(player.board.board, player.type);
+          manualPlacement(true);
+        }
+      });
+    }
 
-  for (let i = 100; i < 200; i += 1) {
-    if (htmlSelection) {
+    for (let i = 100; i < 200; i += 1) {
+      spaces[i].addEventListener('click', (e) => {
+        if (randomFlag === false) {
+          const coords = [
+            parseInt(e.target.getAttribute('x'), 10),
+            parseInt(e.target.getAttribute('y'), 10),
+          ];
+          if (htmlSelection) {
+            if (
+              player.board.manuallyPlaceShip(htmlSelection, coords, direction)
+            ) {
+              Display.shipHighlight(htmlSelection, 'deselect');
+              Display.displayBoard(player.board.board, player.type);
+              spaces = document.getElementsByClassName('space');
+              htmlSelection = null;
+              manualPlacement();
+            }
+          }
+        }
+      });
+
       spaces[i].addEventListener('mouseover', (e) => {
         const hoverCoords = [
           parseInt(e.target.getAttribute('x'), 10),
@@ -78,46 +99,32 @@ function manualPlacement() {
         if (tempHover[0]) {
           Display.showHover(tempHover[0], tempHover[1]);
         } else {
+          console.log(tempHover);
           Display.showHover(tempHover[0], tempHover[1]);
         }
       });
 
-      spaces[i].addEventListener('mouseout', (e) => {
+      spaces[i].addEventListener('mouseout', () => {
         Display.hideHover();
       });
     }
-
-    spaces[i].addEventListener('click', (e) => {
-      if (randomFlag === false) {
-        const coords = [
-          parseInt(e.target.getAttribute('x'), 10),
-          parseInt(e.target.getAttribute('y'), 10),
-        ];
-        if (htmlSelection) {
-          if (
-            player.board.manuallyPlaceShip(htmlSelection, coords, direction)
-          ) {
-            Display.shipHighlight(htmlSelection, 'deselect');
-            Display.displayBoard(player.board.board, player.type);
-            htmlSelection = null;
-            manualPlacement();
-          }
-
-          // const playerSelect = player.board.manuallyPlaceShip(
-          //   htmlSelection,
-          //   coords,
-          //   direction
-          // );
-          // if (playerSelect[0]) {
-          //   Display.shipHighlight(htmlSelection, 'deselect');
-          //   Display.displayBoard(player.board.board, player.type);
-          //   htmlSelection = null;
-          //   manualPlacement();
-          // }
-        }
-      }
-    });
   }
+
+  // const playerSelect = player.board.manuallyPlaceShip(
+  //   htmlSelection,
+  //   coords,
+  //   direction
+  // );
+  // if (playerSelect[0]) {
+  //   Display.shipHighlight(htmlSelection, 'deselect');
+  //   Display.displayBoard(player.board.board, player.type);
+  //   htmlSelection = null;
+  //   manualPlacement();
+  // }
+  // }
+  //     }
+  // });
+  // }
 }
 
 // let cpuMoves = [];
@@ -127,17 +134,16 @@ function init() {
   player = Player('Player', 'human');
 
   Display.newGameMessage();
-  manualPlacement();
-  startButton.innerText = 'Begin!';
-  startButton.disabled = true;
-  winner = null;
-
   Display.shipHighlight('reset');
   Display.clearResults();
   Display.displayBoard(player.board.board, player.type);
   Display.displayBoard(cpu.board.board, cpu.type);
-
   spaces = document.getElementsByClassName('space');
+
+  manualPlacement();
+  startButton.innerText = 'Begin!';
+  startButton.disabled = true;
+  winner = null;
 }
 
 // Adds event listeners to spaces on current board
