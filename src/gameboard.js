@@ -6,7 +6,7 @@ const Gameboard = (boardOwner) => {
   const ships = [];
   const missedShots = [];
 
-  function drawBoard() {
+  function createBoard() {
     for (let i = 9; i >= 0; i -= 1) {
       for (let j = 0; j < 10; j += 1) {
         board.push({
@@ -20,7 +20,7 @@ const Gameboard = (boardOwner) => {
     }
   }
 
-  drawBoard();
+  createBoard();
 
   // Retrieves space on board
   const getSpace = (xCoord, yCoord) => {
@@ -292,7 +292,7 @@ const Gameboard = (boardOwner) => {
       ships.pop();
     }
 
-    drawBoard();
+    createBoard();
 
     const carrierStart = randomStartingCoords();
     const carrierCoords = randomTotalCoords(carrierStart, 5);

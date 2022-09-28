@@ -61,7 +61,6 @@ const Display = {
         resultDiv.innerHTML += `${player} sinks ${opponent}'s fleet and wins!`;
         break;
       default:
-        console.log('Invalid move.');
         break;
     }
   },
