@@ -1,5 +1,5 @@
-import Ship from './ship.js';
-import Gameboard from './gameboard.js';
+// import Ship from './ship.js';
+// import Gameboard from './gameboard.js';
 import Player from './player.js';
 import Display from './displayBoard.js';
 
@@ -50,81 +50,78 @@ function manualPlacement(status = false) {
     manualPlacement();
   });
 
+  function shipSelectionListener(ship) {
+    if (randomFlag === false && !ship.classList.contains('deselect')) {
+      htmlSelection = ship.innerText;
+      htmlSelection =
+        htmlSelection.charAt(0).toLowerCase() + htmlSelection.slice(1);
+      Display.shipHighlight(htmlSelection, 'select');
+      manualPlacement(true);
+    }
+  }
+
+  function spaceSelectionListener(space) {
+    if (randomFlag === false) {
+      const coords = [
+        parseInt(space.getAttribute('x'), 10),
+        parseInt(space.getAttribute('y'), 10),
+      ];
+      if (htmlSelection) {
+        const playerSelection = player.board.manuallyPlaceShip(
+          htmlSelection,
+          coords,
+          direction
+        );
+        if (playerSelection === true) {
+          Display.shipHighlight(htmlSelection, 'deselect');
+          Display.displayBoard(player.board.board, player.type);
+          spaces = document.getElementsByClassName('space');
+          htmlSelection = null;
+          manualPlacement();
+        }
+      }
+    }
+  }
+
+  function spaceHoverListener(space) {
+    if (htmlSelection) {
+      const hoverCoords = [
+        parseInt(space.getAttribute('x'), 10),
+        parseInt(space.getAttribute('y'), 10),
+      ];
+      const tempHover = player.board.manuallyPlaceShip(
+        htmlSelection,
+        hoverCoords,
+        direction,
+        true
+      );
+      if (tempHover[0]) {
+        Display.showHover(tempHover[0], tempHover[1]);
+      } else {
+        Display.showHover(tempHover[0], tempHover[1]);
+      }
+    }
+  }
+
   if (status === false) {
     for (let i = 0; i < htmlShips.length; i += 1) {
-      htmlShips[i].addEventListener('click', () => {
-        if (randomFlag === false) {
-          htmlSelection = htmlShips[i].innerText;
-          htmlSelection =
-            htmlSelection.charAt(0).toLowerCase() + htmlSelection.slice(1);
-          Display.shipHighlight(htmlSelection, 'select');
-          // Display.displayBoard(player.board.board, player.type);
-          manualPlacement(true);
-        }
-      });
+      htmlShips[i].addEventListener('click', (e) =>
+        shipSelectionListener(e.target)
+      );
     }
 
     for (let i = 100; i < 200; i += 1) {
       spaces[i].addEventListener('click', (e) => {
-        if (randomFlag === false) {
-          const coords = [
-            parseInt(e.target.getAttribute('x'), 10),
-            parseInt(e.target.getAttribute('y'), 10),
-          ];
-          if (htmlSelection) {
-            if (
-              player.board.manuallyPlaceShip(htmlSelection, coords, direction)
-            ) {
-              Display.shipHighlight(htmlSelection, 'deselect');
-              Display.displayBoard(player.board.board, player.type);
-              spaces = document.getElementsByClassName('space');
-              htmlSelection = null;
-              manualPlacement();
-            }
-          }
-        }
+        spaceSelectionListener(e.target);
       });
 
       spaces[i].addEventListener('mouseover', (e) => {
-        const hoverCoords = [
-          parseInt(e.target.getAttribute('x'), 10),
-          parseInt(e.target.getAttribute('y'), 10),
-        ];
-        const tempHover = player.board.manuallyPlaceShip(
-          htmlSelection,
-          hoverCoords,
-          direction,
-          true
-        );
-        if (tempHover[0]) {
-          Display.showHover(tempHover[0], tempHover[1]);
-        } else {
-          console.log(tempHover);
-          Display.showHover(tempHover[0], tempHover[1]);
-        }
+        spaceHoverListener(e.target);
       });
 
-      spaces[i].addEventListener('mouseout', () => {
-        Display.hideHover();
-      });
+      spaces[i].addEventListener('mouseout', Display.hideHover);
     }
   }
-
-  // const playerSelect = player.board.manuallyPlaceShip(
-  //   htmlSelection,
-  //   coords,
-  //   direction
-  // );
-  // if (playerSelect[0]) {
-  //   Display.shipHighlight(htmlSelection, 'deselect');
-  //   Display.displayBoard(player.board.board, player.type);
-  //   htmlSelection = null;
-  //   manualPlacement();
-  // }
-  // }
-  //     }
-  // });
-  // }
 }
 
 // let cpuMoves = [];
@@ -151,26 +148,26 @@ function domAttack() {
   for (let i = 0; i < 100; i += 1) {
     spaces[i].addEventListener('click', (e) => {
       playerMove(
-        parseInt(e.target.getAttribute('x')),
-        parseInt(e.target.getAttribute('y'))
+        parseInt(e.target.getAttribute('x'), 10),
+        parseInt(e.target.getAttribute('y'), 10)
       );
     });
   }
 }
 
 // Checks for a winner
-function checkWinner(player, opponent) {
-  if (opponent.board.allSunk()) {
-    winner = player;
-    Display.displayResult(player.name, opponent.name, ['winner']);
+function checkWinner(currentPlayer, currentOpponent) {
+  if (currentOpponent.board.allSunk()) {
+    winner = currentPlayer;
+    Display.displayResult(currentPlayer.name, currentOpponent.name, ['winner']);
     return true;
   }
+  return false;
 }
 
 // Executes a CPU move
 function cpuMove() {
   const coords = cpu.getRandomCoords();
-  // cpuMoves.push(coords);
   const result = player.receiveAttack(coords[0], coords[1]);
   Display.displayResult(cpu.name, player.name, result);
   Display.displayBoard(player.board.board, player.type);
