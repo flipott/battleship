@@ -1,7 +1,8 @@
 const playerDiv = document.querySelector('.player-board');
 const cpuDiv = document.querySelector('.cpu-board');
 const resultDiv = document.querySelector('.results');
-const htmlShips = document.querySelector('.player .ships');
+const playerShips = document.querySelector('.player .ships');
+const allShips = document.querySelectorAll('.ships');
 const instructions = document.querySelector('.player-instruction');
 const randomBtn = document.getElementById('random-board');
 
@@ -67,22 +68,25 @@ const Display = {
   // Clears HTML results
   clearResults() {
     resultDiv.innerHTML = '';
-  },
-  shipHighlight(shipName, highlight) {
-    if (shipName === 'reset') {
-      for (let i = 0; i < htmlShips.children.length; i += 1) {
-        if (htmlShips.children[i].classList.contains('select')) {
-          htmlShips.children[i].classList.remove('select');
+
+    for (let i = 0; i < allShips.length; i += 1) {
+      for (let j = 0; j < allShips[i].children.length; j += 1) {
+        if (allShips[i].children[j].classList.contains('select')) {
+          allShips[i].children[j].classList.remove('select');
         }
-        if (htmlShips.children[i].classList.contains('deselect')) {
-          htmlShips.children[i].classList.remove('deselect');
+        if (allShips[i].children[j].classList.contains('placed')) {
+          allShips[i].children[j].classList.remove('placed');
+        }
+        if (allShips[i].children[j].classList.contains('sunk')) {
+          allShips[i].children[j].classList.remove('sunk');
         }
       }
     }
-
+  },
+  shipHighlight(shipName, highlight) {
     if (shipName === 'all') {
-      for (let i = 0; i < htmlShips.children.length; i += 1) {
-        htmlShips.children[i].classList.add('deselect');
+      for (let i = 0; i < playerShips.children.length; i += 1) {
+        playerShips.children[i].classList.add('placed');
       }
       return;
     }
@@ -90,19 +94,19 @@ const Display = {
     const selectedShip = document.querySelector('.player .' + shipName);
 
     if (highlight === 'select') {
-      for (let i = 0; i < htmlShips.children.length; i += 1) {
-        if (htmlShips.children[i].classList.contains('select')) {
-          htmlShips.children[i].classList.remove('select');
+      for (let i = 0; i < playerShips.children.length; i += 1) {
+        if (playerShips.children[i].classList.contains('select')) {
+          playerShips.children[i].classList.remove('select');
         }
       }
-      if (!selectedShip.classList.contains('deselect') && shipName !== 'all') {
+      if (!selectedShip.classList.contains('placed') && shipName !== 'all') {
         selectedShip.classList.add('select');
       }
-    } else if (highlight === 'deselect') {
+    } else if (highlight === 'placed') {
       if (selectedShip.classList.contains('select')) {
         selectedShip.classList.remove('select');
       }
-      selectedShip.classList.add('deselect');
+      selectedShip.classList.add('placed');
     }
   },
   newGameMessage() {
