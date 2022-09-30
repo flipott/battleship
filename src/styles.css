@@ -57,9 +57,16 @@
   color: blue;
 }
 
-.deselect {
+.placed {
   font-size: 1rem;
   color: blue;
+  user-select: none;
+  cursor: default;
+}
+
+.sunk {
+  font-size: 1rem;
+  color: red;
   user-select: none;
   cursor: default;
 }
