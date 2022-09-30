@@ -60,6 +60,11 @@ const Display = {
         break;
       case 'winner':
         resultDiv.innerHTML += `${player} sinks ${opponent}'s fleet and wins!`;
+        if (player === 'Player') {
+          document.querySelector('.player-instruction').innerText = 'You win!';
+        } else {
+          document.querySelector('.player-instruction').innerText = 'You lose!';
+        }
         break;
       default:
         break;
@@ -80,6 +85,14 @@ const Display = {
         if (allShips[i].children[j].classList.contains('sunk')) {
           allShips[i].children[j].classList.remove('sunk');
         }
+      }
+    }
+
+    const sheet = document.styleSheets[0];
+
+    for (let i = 0; i < sheet.cssRules.length; i += 1) {
+      if (sheet.cssRules[i].selectorText === '.cpu .space') {
+        sheet.deleteRule(i--);
       }
     }
   },
