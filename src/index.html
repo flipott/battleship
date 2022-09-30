@@ -9,39 +9,41 @@
     <title>Battleship</title>
   </head>
   <body>
-    <button id="new-game">New Game</button>
-    <div class="message">
-      <div class="player-instruction"></div>
-      <button id="random-board">Randomly generate your board instead.</button>
-    </div>
-    <div class="game-container">
-      <div class="cpu">
-        <div class="player-title">Computer</div>
-        <div class="cpu-board"></div>
-        <div class="ships">
-          <div class="carrier">Carrier</div>
-          <div class="battleship">Battleship</div>
-          <div class="destroyer">Destroyer</div>
-          <div class="submarine">Submarine</div>
-          <div class="patrol">Patrol</div>
-        </div>
+    <div class="main">
+      <button id="new-game">New Game</button>
+      <div class="message">
+        <div class="player-instruction"></div>
+        <button id="random-board">Randomly generate your board instead.</button>
       </div>
-      <div class="player">
-        <div class="player-title">Player</div>
-        <div class="player-board"></div>
-        <div class="ships">
-          <div class="carrier">Carrier</div>
-          <div class="battleship">Battleship</div>
-          <div class="destroyer">Destroyer</div>
-          <div class="submarine">Submarine</div>
-          <div class="patrol">Patrol</div>
+      <div class="game-container">
+        <div class="cpu">
+          <div class="player-title">Computer</div>
+          <div class="cpu-board"></div>
+          <div class="ships">
+            <div class="carrier">Carrier</div>
+            <div class="battleship">Battleship</div>
+            <div class="destroyer">Destroyer</div>
+            <div class="submarine">Submarine</div>
+            <div class="patrol">Patrol</div>
+          </div>
         </div>
-        <div class="direction-change">
-          Direction: <span id="direction">Vertical</span
-          ><button id="direction-btn">Change</button>
+        <div class="player">
+          <div class="player-title">Player</div>
+          <div class="player-board"></div>
+          <div class="ships">
+            <div class="carrier">Carrier</div>
+            <div class="battleship">Battleship</div>
+            <div class="destroyer">Destroyer</div>
+            <div class="submarine">Submarine</div>
+            <div class="patrol">Patrol</div>
+          </div>
+          <div class="direction-change">
+            Direction: <span id="direction">Vertical</span
+            ><button id="direction-btn">Change</button>
+          </div>
         </div>
+        <div class="results"></div>
       </div>
-      <div class="results"></div>
     </div>
   </body>
 </html>
