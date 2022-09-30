@@ -38,6 +38,7 @@ directionChange.addEventListener('click', () => {
 function manualPlacement(status = false) {
   if (player.board.ships.length === 5) {
     startButton.disabled = false;
+    htmlSelection = null;
     return;
   }
 
@@ -214,7 +215,7 @@ startButton.addEventListener('click', () => {
     domAttack();
     startButton.innerText = 'New Game';
     startButton.disabled = false;
-    randomBtn.style.display = 'none';
+    randomBtn.style.visibility = 'hidden';
     document.querySelector('.player-instruction').innerText = 'Make your move!';
   }
 });

@@ -111,7 +111,8 @@ const Display = {
   },
   newGameMessage() {
     instructions.innerText = 'Please position your fleet on your board.';
-    randomBtn.style.display = 'block';
+    document.querySelector('.message').style.visibility = 'visible';
+    randomBtn.style.visibility = 'visible';
   },
   showHover(validity, coords) {
     for (let i = 0; i < coords.length; i += 1) {
