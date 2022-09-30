@@ -45,6 +45,7 @@ function manualPlacement(status = false) {
 
   randomBtn.addEventListener('click', () => {
     randomFlag = true;
+    directionDiv.style.display = 'none';
     player.board.generateFleet();
     Display.displayBoard(player.board.board, player.type);
     Display.shipHighlight('all', 'select');
