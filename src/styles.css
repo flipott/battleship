@@ -30,6 +30,10 @@ body {
   justify-content: center;
 }
 
+.direction-change {
+  visibility: hidden;
+}
+
 .information button {
   margin: auto;
   width: 100%;
@@ -89,8 +93,14 @@ h2 {
 .results {
   display: flex;
   flex-direction: column-reverse;
-  height: 500px;
+  height: 400px;
   overflow: scroll;
+  width: 300px;
+}
+
+.empty {
+  width: 300px;
+  visibility: hidden;
 }
 
 .ships {
