@@ -23,9 +23,6 @@
           <div class="player-instruction">
             Please position your fleet on your board.
           </div>
-          <button id="random-board">
-            Randomly generate your board instead.
-          </button>
         </div>
       </div>
       <div class="game-container">
@@ -41,9 +38,15 @@
             <div class="patrol">Patrol</div>
           </div>
           <div class="direction-change">
-            Direction: <span id="direction">Vertical</span
-            ><button id="direction-btn">Change</button>
+            <div id="direction-line">
+              Direction: <span id="direction">Vertical</span
+              ><button id="direction-btn">Change</button>
+            </div>
+            <span id="manual-message"
+              >Select a ship and place it on your board.</span
+            >
           </div>
+          <button id="random-board">Randomly generate a board</button>
         </div>
         <div class="cpu">
           <div class="player-title"><h2>Computer</h2></div>
