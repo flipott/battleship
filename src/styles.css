@@ -5,6 +5,7 @@
   --dark-sky-blue: hsla(192, 43%, 62%, 1);
   --light-gray: hsla(195, 9%, 82%, 1);
   font-family: 'Sarabun', sans-serif;
+  user-select: none;
 }
 
 html,
@@ -32,12 +33,27 @@ body {
 
 .direction-change {
   visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px 12px 25px;
+}
+
+#direction-line {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
 .information button {
   margin: auto;
   width: 100%;
   padding: 6px;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
 }
 
 h1 {
@@ -56,7 +72,11 @@ h2 {
 
 .game-container {
   display: flex;
-  gap: 50px;
+  gap: 30px;
+}
+
+#random-board {
+  visibility: hidden;
 }
 
 .player-board,
@@ -66,28 +86,30 @@ h2 {
   width: fit-content;
 }
 
+.player,
+.cpu {
+  width: 550px;
+}
+
 .space {
   height: 50px;
   width: 50px;
-  background: green;
+  background: var(--feldgrau);
   border: solid 1px black;
   color: white;
 }
 
 .player-board .space:not([occupiedby='null']).space:not([occupiedby='missed']) {
-  background: blue;
-}
-
-.space[occupiedby='hit'] {
-  background: red;
+  background: rgb(58, 58, 136);
 }
 
 .space[occupiedby='missed'] {
-  background: yellow;
+  background: rgb(201, 201, 131);
 }
 
-.space[hitstatus='hit'] {
-  background: red !important;
+.space[hitstatus='hit'],
+.space[occupiedby='hit'] {
+  background: rgb(187, 107, 107) !important;
 }
 
 .results {
@@ -96,6 +118,8 @@ h2 {
   height: 400px;
   overflow: scroll;
   width: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .empty {
@@ -107,27 +131,33 @@ h2 {
   display: flex;
   gap: 50px;
   user-select: none;
+  font-weight: bold;
 }
 
 .player .ships {
   cursor: pointer;
 }
 
+.player-instruction {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .select {
   font-size: 1.2rem;
-  color: blue;
+  color: lightblue;
 }
 
 .placed {
   font-size: 1rem;
-  color: blue;
+  color: rgb(58, 58, 136);
   user-select: none;
   cursor: default;
 }
 
 .sunk {
   font-size: 1rem;
-  color: red;
+  color: rgb(187, 107, 107);
   user-select: none;
   cursor: default;
 }
