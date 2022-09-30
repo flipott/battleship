@@ -44,15 +44,16 @@ function manualPlacement(status = false) {
 
   let randomFlag = false;
 
-  randomBtn.addEventListener('click', () => {
-    randomFlag = true;
-    directionDiv.style.display = 'none';
-    player.board.generateFleet();
-    Display.displayBoard(player.board.board, player.type);
-    Display.shipHighlight('all', 'select');
-    manualPlacement();
-  });
-
+  if (!randomFlag) {
+    randomBtn.addEventListener('click', () => {
+      randomFlag = true;
+      directionDiv.style.visibility = 'hidden';
+      player.board.generateFleet();
+      Display.displayBoard(player.board.board, player.type);
+      Display.shipHighlight('all', 'select');
+      manualPlacement();
+    });
+  }
   function shipSelectionListener(ship) {
     if (randomFlag === false && !ship.classList.contains('placed')) {
       htmlSelection = ship.innerText;
@@ -113,7 +114,7 @@ function manualPlacement(status = false) {
       );
     }
 
-    for (let i = 100; i < 200; i += 1) {
+    for (let i = 0; i < 100; i += 1) {
       spaces[i].addEventListener('click', (e) => {
         spaceSelectionListener(e.target);
       });
@@ -137,7 +138,7 @@ function init() {
   Display.clearResults();
   Display.displayBoard(player.board.board, player.type);
   Display.displayBoard(cpu.board.board, cpu.type);
-  directionDiv.style.display = 'flex';
+  directionDiv.style.visibility = 'visible';
   spaces = document.getElementsByClassName('space');
 
   manualPlacement();
@@ -148,7 +149,7 @@ function init() {
 
 // Adds event listeners to spaces on current board
 function domAttack() {
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 100; i < 200; i += 1) {
     spaces[i].addEventListener('click', (e) => {
       playerMove(
         parseInt(e.target.getAttribute('x'), 10),
@@ -179,6 +180,7 @@ function cpuMove() {
   Display.displayResult(cpu.name, player.name, result);
   Display.displayBoard(player.board.board, player.type);
   checkWinner(cpu, player);
+  document.querySelector('.player-instruction').innerText = 'Make your move!';
 }
 
 // Executes a player move
@@ -195,9 +197,11 @@ function playerMove(x, y) {
       Display.displayBoard(cpu.board.board, cpu.type);
       if (!checkWinner(player, cpu)) {
         spaces = document.getElementsByClassName('space');
+        document.querySelector('.player-instruction').innerText =
+          'CPU is making move...';
         setTimeout(function () {
           cpuMove();
-        }, 250);
+        }, 350);
 
         domAttack();
       }
@@ -211,11 +215,12 @@ startButton.addEventListener('click', () => {
   }
 
   if (startButton.innerText === 'Begin!' && player.board.ships.length === 5) {
-    directionDiv.style.display = 'none';
+    directionDiv.style.visibility = 'hidden';
     domAttack();
     startButton.innerText = 'New Game';
     startButton.disabled = false;
     randomBtn.style.visibility = 'hidden';
+    document.styleSheets[0].insertRule('.cpu .space { cursor: pointer;}');
     document.querySelector('.player-instruction').innerText = 'Make your move!';
   }
 });
