@@ -7,6 +7,7 @@ const startButton = document.getElementById('new-game');
 const htmlShips = document.querySelector('.player .ships').children;
 const directionChange = document.getElementById('direction-btn');
 const directionSpan = document.getElementById('direction');
+const directionDiv = document.querySelector('.direction-change');
 const randomBtn = document.getElementById('random-board');
 
 let winner = null;
@@ -51,7 +52,7 @@ function manualPlacement(status = false) {
   });
 
   function shipSelectionListener(ship) {
-    if (randomFlag === false && !ship.classList.contains('deselect')) {
+    if (randomFlag === false && !ship.classList.contains('placed')) {
       htmlSelection = ship.innerText;
       htmlSelection =
         htmlSelection.charAt(0).toLowerCase() + htmlSelection.slice(1);
@@ -73,7 +74,7 @@ function manualPlacement(status = false) {
           direction
         );
         if (playerSelection === true) {
-          Display.shipHighlight(htmlSelection, 'deselect');
+          Display.shipHighlight(htmlSelection, 'placed');
           Display.displayBoard(player.board.board, player.type);
           spaces = document.getElementsByClassName('space');
           htmlSelection = null;
@@ -131,10 +132,10 @@ function init() {
   player = Player('Player', 'human');
 
   Display.newGameMessage();
-  Display.shipHighlight('reset');
   Display.clearResults();
   Display.displayBoard(player.board.board, player.type);
   Display.displayBoard(cpu.board.board, cpu.type);
+  directionDiv.style.display = 'flex';
   spaces = document.getElementsByClassName('space');
 
   manualPlacement();
@@ -169,6 +170,10 @@ function checkWinner(currentPlayer, currentOpponent) {
 function cpuMove() {
   const coords = cpu.getRandomCoords();
   const result = player.receiveAttack(coords[0], coords[1]);
+  if (result[0] === 'sunk') {
+    const shipDiv = document.querySelector(`.player .${result[1]}`);
+    shipDiv.classList.add('sunk');
+  }
   Display.displayResult(cpu.name, player.name, result);
   Display.displayBoard(player.board.board, player.type);
   checkWinner(cpu, player);
@@ -179,6 +184,11 @@ function playerMove(x, y) {
   if (!winner) {
     if (player.sendAttack(x, y)) {
       const result = cpu.receiveAttack(x, y);
+      if (result[0] === 'sunk') {
+        const shipDiv = document.querySelector(`.cpu .${result[1]}`);
+        shipDiv.classList.remove('placed');
+        shipDiv.classList.add('sunk');
+      }
       Display.displayResult(player.name, cpu.name, result);
       Display.displayBoard(cpu.board.board, cpu.type);
       if (!checkWinner(player, cpu)) {
@@ -199,6 +209,7 @@ startButton.addEventListener('click', () => {
   }
 
   if (startButton.innerText === 'Begin!' && player.board.ships.length === 5) {
+    directionDiv.style.display = 'none';
     domAttack();
     startButton.innerText = 'New Game';
     startButton.disabled = false;
