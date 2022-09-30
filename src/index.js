@@ -38,6 +38,7 @@ directionChange.addEventListener('click', () => {
 function manualPlacement(status = false) {
   if (player.board.ships.length === 5) {
     startButton.disabled = false;
+    directionDiv.style.visibility = 'hidden';
     htmlSelection = null;
     return;
   }
