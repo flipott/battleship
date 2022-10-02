@@ -12,8 +12,8 @@ const randomBtn = document.getElementById('random-board');
 
 let winner = null;
 let cpu = Player('CPU', 'cpu');
-cpu.board.generateFleet();
 let player = Player('Player', 'human');
+cpu.board.generateFleet();
 
 Display.displayBoard(player.board.board, player.type);
 Display.displayBoard(cpu.board.board, cpu.type);
@@ -55,6 +55,8 @@ function manualPlacement(status = false) {
       manualPlacement();
     });
   }
+
+  // Adds listeners to ship names
   function shipSelectionListener(ship) {
     if (randomFlag === false && !ship.classList.contains('placed')) {
       htmlSelection = ship.innerText;
@@ -65,6 +67,7 @@ function manualPlacement(status = false) {
     }
   }
 
+  // Adds listeners to clicked spaces
   function spaceSelectionListener(space) {
     if (randomFlag === false) {
       const coords = [
@@ -88,6 +91,7 @@ function manualPlacement(status = false) {
     }
   }
 
+  // Adds listeners to hovered spaces
   function spaceHoverListener(space) {
     if (htmlSelection) {
       const hoverCoords = [
@@ -210,6 +214,7 @@ function playerMove(x, y) {
   }
 }
 
+// Controls what happens when New Game button is selected
 startButton.addEventListener('click', () => {
   if (startButton.innerText === 'New Game') {
     init();

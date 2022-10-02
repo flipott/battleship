@@ -96,6 +96,7 @@ const Display = {
       }
     }
   },
+  // Highlights selected ship
   shipHighlight(shipName, highlight) {
     if (shipName === 'all') {
       for (let i = 0; i < playerShips.children.length; i += 1) {
@@ -122,11 +123,13 @@ const Display = {
       selectedShip.classList.add('placed');
     }
   },
+  // Displays message when a new game is started
   newGameMessage() {
     instructions.innerText = 'Please position your fleet on your board.';
     document.querySelector('.message').style.visibility = 'visible';
     randomBtn.style.visibility = 'visible';
   },
+  // Highlights spaces that are hovered over
   showHover(validity, coords) {
     for (let i = 0; i < coords.length; i += 1) {
       for (let j = 0; j < playerDiv.children.length; j += 1) {
@@ -142,6 +145,7 @@ const Display = {
       }
     }
   },
+  // Removes highlight from hovered over spaces
   hideHover() {
     for (let i = 0; i < playerDiv.children.length; i += 1) {
       if (playerDiv.children[i].classList.contains('hoverValid')) {
