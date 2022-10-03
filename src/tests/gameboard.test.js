@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import Gameboard from './gameboard.js';
+import Gameboard from '../gameboard.js';
 
 test('verify board length', () => {
   const playerBoard = Gameboard('player');

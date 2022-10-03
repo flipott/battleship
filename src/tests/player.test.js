@@ -1,4 +1,4 @@
-import Player from './player.js';
+import Player from '../modules/player.js';
 
 test('get player properties', () => {
   const player = Player('Joe', 'human');

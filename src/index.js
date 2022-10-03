@@ -1,7 +1,7 @@
 // import Ship from './ship.js';
 // import Gameboard from './gameboard.js';
-import Player from './player.js';
-import Display from './displayBoard.js';
+import Player from './modules/player.js';
+import Display from './modules/displayBoard.js';
 
 const startButton = document.getElementById('new-game');
 const htmlShips = document.querySelector('.player .ships').children;

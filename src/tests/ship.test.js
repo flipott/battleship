@@ -1,4 +1,4 @@
-import Ship from './ship.js';
+import Ship from '../modules/ship.js';
 
 test('get ship properties', () => {
   const destroyer = Ship('destroyer', [3, 2], 3);
