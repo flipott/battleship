@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Ship from './ship.js';
 
 test('get ship properties', () => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Player from './player.js';
 
 test('get player properties', () => {
