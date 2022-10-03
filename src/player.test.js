@@ -15,11 +15,3 @@ test('receive attack', () => {
   player.receiveAttack(4, 2);
   expect(player.board.getSpace(4, 2).empty).toBeFalsy();
 });
-
-test('get random attack coordinates', () => {
-  const cpu = Player('CPU', 'cpu');
-  cpu.sendRandomAttack();
-  cpu.sendRandomAttack();
-  cpu.sendRandomAttack();
-  expect(cpu.sentAttacks.length).toBe(3);
-});
