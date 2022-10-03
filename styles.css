@@ -1,0 +1,190 @@
+:root {
+  --dark-sienna: hsla(349, 48%, 9%, 1);
+  --feldgrau: hsla(163, 15%, 37%, 1);
+  --middle-blue-green: hsla(167, 45%, 63%, 1);
+  --dark-sky-blue: hsla(192, 43%, 62%, 1);
+  --light-gray: hsla(195, 9%, 82%, 1);
+  font-family: 'Sarabun', sans-serif;
+  user-select: none;
+}
+
+html,
+body {
+  background: var(--dark-sienna);
+  color: var(--light-gray);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.message {
+  visibility: hidden;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.direction-change {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding: 18px;
+  border: 5px solid var(--light-gray);
+  background: var(--feldgrau);
+  color: white;
+}
+
+.direction-line {
+  display: flex;
+}
+
+.information button {
+  margin: auto;
+  width: 100%;
+}
+
+#direction {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.title {
+  font-family: 'Ultra', serif;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.game-container {
+  display: flex;
+  gap: 30px;
+}
+
+#random-board {
+  visibility: hidden;
+  width: fit-content;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.player-board,
+.cpu-board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  width: fit-content;
+}
+
+.player,
+.cpu {
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.space {
+  height: 50px;
+  width: 50px;
+  background: var(--feldgrau);
+  border: solid 1px var(--light-gray);
+  color: white;
+}
+
+.player-board .space:not([occupiedby='null']).space:not([occupiedby='missed']) {
+  background: rgb(58, 58, 136);
+}
+
+.space[occupiedby='missed'] {
+  background: rgb(201, 201, 131);
+}
+
+.space[hitstatus='hit'],
+.space[occupiedby='hit'] {
+  background: rgb(187, 107, 107) !important;
+}
+
+.results {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 520px;
+  overflow: scroll;
+  width: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#new-game {
+  width: 200px;
+}
+
+.empty {
+  width: 300px;
+  visibility: hidden;
+}
+
+.ships {
+  display: flex;
+  gap: 50px;
+  user-select: none;
+  font-weight: bold;
+  height: 25px;
+}
+
+.player .ships {
+  cursor: pointer;
+}
+
+.player-instruction,
+#manual-message {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.select {
+  font-size: 1.2rem;
+  color: lightblue;
+}
+
+.placed {
+  font-size: 1rem;
+  color: rgb(58, 58, 136);
+  user-select: none;
+  cursor: default;
+}
+
+.sunk {
+  font-size: 1rem;
+  color: rgb(187, 107, 107);
+  user-select: none;
+  cursor: default;
+}
+
+.hoverValid {
+  background: lightblue;
+}
+
+.hoverInvalid {
+  background: lightcoral;
+}

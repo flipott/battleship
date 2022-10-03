@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,600;1,500&family=Ultra&display=swap"
+      rel="stylesheet"
+    />
+    <title>Sea Battle</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="title"><h1>Sea Battle</h1></div>
+      <div class="information">
+        <button id="new-game">New Game</button>
+        <div class="message">
+          <div class="player-instruction">
+            Please position your fleet on your board.
+          </div>
+        </div>
+      </div>
+      <div class="game-container">
+        <div class="empty"></div>
+        <div class="player">
+          <div class="player-title"><h2>Player</h2></div>
+          <div class="player-board"></div>
+          <div class="ships">
+            <div class="carrier">Carrier</div>
+            <div class="battleship">Battleship</div>
+            <div class="destroyer">Destroyer</div>
+            <div class="submarine">Submarine</div>
+            <div class="patrol">Patrol</div>
+          </div>
+          <div class="direction-change">
+            <div id="direction-line">
+              Direction: <span id="direction">Vertical</span
+              ><button id="direction-btn">Change</button>
+            </div>
+            <span id="manual-message"
+              >Select a ship and place it on your board.</span
+            >
+            <button id="random-board">Randomly generate a board</button>
+          </div>
+        </div>
+        <div class="cpu">
+          <div class="player-title"><h2>Computer</h2></div>
+          <div class="cpu-board"></div>
+          <div class="ships">
+            <div class="carrier">Carrier</div>
+            <div class="battleship">Battleship</div>
+            <div class="destroyer">Destroyer</div>
+            <div class="submarine">Submarine</div>
+            <div class="patrol">Patrol</div>
+          </div>
+        </div>
+        <div class="results-container">
+          <div class="player-title"><h2>Results</h2></div>
+          <div class="results"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
