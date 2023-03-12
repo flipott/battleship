@@ -15,8 +15,8 @@ let cpu = Player('CPU', 'cpu');
 let player = Player('Player', 'human');
 cpu.board.generateFleet();
 
-Display.displayBoard(player.board.board, player.type);
-Display.displayBoard(cpu.board.board, cpu.type);
+Display.displayBoard(player.board.board, player.type, false);
+Display.displayBoard(cpu.board.board, cpu.type, false);
 
 let spaces = document.getElementsByClassName('space');
 
@@ -38,7 +38,9 @@ directionChange.addEventListener('click', () => {
 function manualPlacement(status = false) {
   if (player.board.ships.length === 5) {
     startButton.disabled = false;
-    directionDiv.style.visibility = 'hidden';
+    document.querySelector("#manual-message").style.color = "rgb(152, 152, 152)";
+    document.querySelector("#direction-line").style.color = "rgb(152, 152, 152)";
+    document.querySelector("#direction-btn").disabled = "disabled";
     htmlSelection = null;
     return;
   }
@@ -48,9 +50,11 @@ function manualPlacement(status = false) {
   if (!randomFlag) {
     randomBtn.addEventListener('click', () => {
       randomFlag = true;
-      directionDiv.style.visibility = 'hidden';
+      document.querySelector("#manual-message").style.color = "rgb(152, 152, 152)";
+      document.querySelector("#direction-line").style.color = "rgb(152, 152, 152)";
+      document.querySelector("#direction-btn").disabled = "disabled";
       player.board.generateFleet();
-      Display.displayBoard(player.board.board, player.type);
+      Display.displayBoard(player.board.board, player.type, false);
       Display.shipHighlight('all', 'select');
       manualPlacement();
     });
@@ -82,7 +86,7 @@ function manualPlacement(status = false) {
         );
         if (playerSelection === true) {
           Display.shipHighlight(htmlSelection, 'placed');
-          Display.displayBoard(player.board.board, player.type);
+          Display.displayBoard(player.board.board, player.type, false);
           spaces = document.getElementsByClassName('space');
           htmlSelection = null;
           manualPlacement();
@@ -120,6 +124,7 @@ function manualPlacement(status = false) {
     }
 
     for (let i = 0; i < 100; i += 1) {
+      spaces[i].style.cursor = "pointer";
       spaces[i].addEventListener('click', (e) => {
         spaceSelectionListener(e.target);
       });
@@ -133,7 +138,6 @@ function manualPlacement(status = false) {
   }
 }
 
-// let cpuMoves = [];
 function init() {
   cpu = Player('CPU', 'cpu');
   cpu.board.generateFleet();
@@ -141,10 +145,17 @@ function init() {
 
   Display.newGameMessage();
   Display.clearResults();
-  Display.displayBoard(player.board.board, player.type);
-  Display.displayBoard(cpu.board.board, cpu.type);
+  Display.displayBoard(player.board.board, player.type, false);
+  Display.displayBoard(cpu.board.board, cpu.type, false);
   directionDiv.style.visibility = 'visible';
+  directionDiv.style.display = 'flex';
+
   spaces = document.getElementsByClassName('space');
+  document.querySelector("#manual-message").style.color = "white";
+  document.querySelector("#direction-line").style.color = "white";
+  document.querySelector("#direction-btn").disabled = false;
+  document.querySelector(".results-container").style.display = "none";
+
 
   manualPlacement();
   startButton.innerText = 'Begin!';
@@ -176,16 +187,21 @@ function checkWinner(currentPlayer, currentOpponent) {
 
 // Executes a CPU move
 function cpuMove() {
-  const coords = cpu.getRandomCoords();
-  const result = player.receiveAttack(coords[0], coords[1]);
-  if (result[0] === 'sunk') {
-    const shipDiv = document.querySelector(`.player .${result[1]}`);
-    shipDiv.classList.add('sunk');
-  }
-  Display.displayResult(cpu.name, player.name, result);
-  Display.displayBoard(player.board.board, player.type);
-  checkWinner(cpu, player);
-  document.querySelector('.player-instruction').innerText = 'Make your move!';
+  setTimeout(() => {
+    const coords = cpu.getRandomCoords();
+    const result = player.receiveAttack(coords[0], coords[1]);
+    if (result[0] === 'sunk') {
+      const shipDiv = document.querySelector(`.player .${result[1]}`);
+      shipDiv.classList.add('sunk');
+    }
+    Display.displayResult(cpu.name, player.name, result);
+    Display.displayBoard(player.board.board, player.type, true);
+    const winResult = checkWinner(cpu, player);
+    if (!winResult) {
+      document.querySelector('.player-instruction').innerText = 'Make your move!';
+    }
+    document.querySelector("body").style["pointer-events"] = "all";
+  }, 1000);
 }
 
 // Executes a player move
@@ -199,15 +215,12 @@ function playerMove(x, y) {
         shipDiv.classList.add('sunk');
       }
       Display.displayResult(player.name, cpu.name, result);
-      Display.displayBoard(cpu.board.board, cpu.type);
+      Display.displayBoard(cpu.board.board, cpu.type, true);
       if (!checkWinner(player, cpu)) {
         spaces = document.getElementsByClassName('space');
-        document.querySelector('.player-instruction').innerText =
-          'CPU is making move...';
-        setTimeout(function () {
-          cpuMove();
-        }, 350);
-
+        document.querySelector('.player-instruction').innerText = 'CPU is making move...';
+        document.querySelector("body").style["pointer-events"] = "none";
+        cpuMove();
         domAttack();
       }
     }
@@ -221,12 +234,21 @@ startButton.addEventListener('click', () => {
   }
 
   if (startButton.innerText === 'Begin!' && player.board.ships.length === 5) {
-    directionDiv.style.visibility = 'hidden';
+    directionDiv.style.display = 'none';
+    document.querySelector("#manual-message").style.color = "white";
+    document.querySelector("#direction-line").style.color = "white";
+    document.querySelector("#direction-btn").disabled = false;
+    document.querySelector(".results-container").style.display = "flex";
     domAttack();
     startButton.innerText = 'New Game';
     startButton.disabled = false;
     randomBtn.style.visibility = 'hidden';
-    document.styleSheets[0].insertRule('.cpu .space { cursor: pointer;}');
+    document.querySelectorAll(".cpu .space").forEach(space => { space.classList.add("cpu-active-space") });
     document.querySelector('.player-instruction').innerText = 'Make your move!';
+    for (let i = 0; i < htmlShips.length; i++) {
+      if (htmlShips[i].classList.contains("placed")) {
+        htmlShips[i].classList.remove("placed");
+      }
+    }
   }
 });
