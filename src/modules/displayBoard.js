@@ -8,7 +8,7 @@ const randomBtn = document.getElementById('random-board');
 
 const Display = {
   // Generates HTML board
-  displayBoard(playerBoard, playerType) {
+  displayBoard(playerBoard, playerType, gameActive) {
     if (playerType === 'human') {
       playerDiv.innerHTML = '';
 
@@ -21,6 +21,13 @@ const Display = {
         space.setAttribute('empty', playerBoard[i].empty);
         if (playerBoard[i].hitStatus === 'hit') {
           space.setAttribute('hitstatus', 'hit');
+          const dot = document.createElement('span');
+          dot.classList.add('hit-dot')
+          space.appendChild(dot);
+        } else if (space.getAttribute("occupiedby") !== "null" && space.getAttribute("occupiedby") !== 'missed') {
+          const shipDot = document.createElement('span');
+          shipDot.classList.add('player-ship-dot')
+          space.appendChild(shipDot);
         }
         playerDiv.appendChild(space);
       }
@@ -39,9 +46,12 @@ const Display = {
 
         if (playerBoard[i].hitStatus === 'hit') {
           space.setAttribute('hitStatus', 'hit');
+          const dot = document.createElement('span');
+          dot.classList.add('hit-dot')
+          space.appendChild(dot);
         }
-
         space.setAttribute('empty', null);
+        if (gameActive) { space.classList.add("cpu-active-space") };
         cpuDiv.appendChild(space);
       }
     }
@@ -59,6 +69,8 @@ const Display = {
         resultDiv.innerHTML += `${player} attacks and sinks ${opponent}'s ${result[1]}!<br>`;
         break;
       case 'winner':
+        const cpuSpaces = document.querySelectorAll(".cpu .space");
+        cpuSpaces.forEach(space => { space.classList.remove("cpu-active-space") });
         resultDiv.innerHTML += `${player} sinks ${opponent}'s fleet and wins!`;
         if (player === 'Player') {
           document.querySelector('.player-instruction').innerText = 'You win!';
