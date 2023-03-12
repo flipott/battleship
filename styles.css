@@ -1,25 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Magra:wght@400;700&family=Piazzolla:wght@400;500;600&display=swap');
+
 :root {
-  --dark-sienna: hsla(349, 48%, 9%, 1);
-  --feldgrau: hsla(163, 15%, 37%, 1);
-  --middle-blue-green: hsla(167, 45%, 63%, 1);
-  --dark-sky-blue: hsla(192, 43%, 62%, 1);
-  --light-gray: hsla(195, 9%, 82%, 1);
-  font-family: 'Sarabun', sans-serif;
-  user-select: none;
+  font-family: 'Magra', sans-serif;
 }
 
 html,
 body {
-  background: var(--dark-sienna);
-  color: var(--light-gray);
+  background: rgb(136, 155, 255);
+  background: radial-gradient(circle, rgba(136, 155, 255, 1) 0%, rgba(12, 49, 135, 1) 100%);
+  color: white;
+}
+
+body {
+  min-height: 100%;
+}
+
+html,
+body,
+h1 {
+  padding: 0;
+  margin: 0;
+}
+
+.header {
+  font-family: "Piazzolla", serif;
+  font-size: 1.5rem;
+  width: 100%;
+  background: #1B264F;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  align-items: center;
 }
+
+.main+* {
+  max-width: 1200px;
+}
+
 
 .message {
   visibility: hidden;
@@ -29,64 +52,74 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding-top: 1em;
 }
 
 .direction-change {
   visibility: hidden;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
-  padding: 18px;
-  border: 5px solid var(--light-gray);
-  background: var(--feldgrau);
-  color: white;
+  align-items: center;
+  text-align: center;
+  margin-block: 1em;
+  padding: 0.5em;
+  border: 5px solid #E6E6E6;
+  border-radius: 6px;
+  background: #4F6BBB;
+  gap: 0.75em;
+  height: 115px;
 }
 
 .direction-line {
   display: flex;
 }
 
-.information button {
-  margin: auto;
-  width: 100%;
-}
-
 #direction {
   display: inline-block;
   width: 100px;
   font-weight: bold;
+  text-align: center;
+}
+
+.direction-change button {
+  font-size: 1.1rem;
 }
 
 button {
   border: none;
   border-radius: 4px;
   padding: 4px 8px;
+  cursor: pointer;
 }
 
-h1 {
-  margin-bottom: 5px;
+button:disabled {
+  cursor: default;
+  background: rgb(152, 152, 152);
+  color: rgb(97, 97, 97);
 }
 
-h2 {
+.directio h2 {
   margin-top: 0;
-}
-
-.title {
-  font-family: 'Ultra', serif;
-  text-transform: uppercase;
-  font-size: 1.5rem;
 }
 
 .game-container {
   display: flex;
-  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+  gap: 50px;
 }
 
 #random-board {
   visibility: hidden;
-  width: fit-content;
-  margin: auto;
-  margin-top: 15px;
+  background: #987BEA;
+}
+
+#random-board:hover {
+  background: #685796;
 }
 
 .player-board,
@@ -98,58 +131,105 @@ h2 {
 
 .player,
 .cpu {
-  width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .space {
-  height: 50px;
-  width: 50px;
-  background: var(--feldgrau);
-  border: solid 1px var(--light-gray);
+  height: 2.5em;
+  width: 2.5em;
+  background: #E6E6E6;
+  border: solid 1.5px #302B27;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .player-board .space:not([occupiedby='null']).space:not([occupiedby='missed']) {
-  background: rgb(58, 58, 136);
+  background: #5F64D1;
 }
 
 .space[occupiedby='missed'] {
-  background: rgb(201, 201, 131);
+  background: #92AAEC !important;
 }
 
 .space[hitstatus='hit'],
 .space[occupiedby='hit'] {
-  background: rgb(187, 107, 107) !important;
+  background: #FD8DAF !important;
+}
+
+.space[x="0"][y="9"] {
+  border-top-left-radius: 6px;
+}
+
+.space[x="9"][y="9"] {
+  border-top-right-radius: 6px;
+}
+
+.space[x="0"][y="0"] {
+  border-bottom-left-radius: 6px;
+}
+
+.space[x="9"][y="0"] {
+  border-bottom-right-radius: 6px;
 }
 
 .results {
   display: flex;
   flex-direction: column-reverse;
-  height: 520px;
   overflow: scroll;
-  width: 300px;
   overflow-x: hidden;
   overflow-y: auto;
+  height: 65px;
+  width: 20em;
+}
+
+.results-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-block: 1em;
+  margin-inline: auto;
+  padding: 0.75em;
+  border: 5px solid #E6E6E6;
+  border-radius: 6px;
+  background: #4F6BBB;
+  gap: 0.75em;
+  width: fit-content
 }
 
 #new-game {
-  width: 200px;
+  font-size: 1.4rem;
 }
 
-.empty {
-  width: 300px;
-  visibility: hidden;
+button {
+  width: fit-content;
+  background: #92AAEC;
+  color: white;
+  padding: 0.25em 1.25em;
+  font-family: "Magra", sans-serif;
+  font-weight: 600;
+  /* transition: color 1s ease-in; */
+}
+
+button:not(:disabled):hover {
+  background: #7583a8;
+  color: rgb(210, 207, 207);
+  transition: color 0.2s ease-in;
+  transition: background 0.2s ease-in;
 }
 
 .ships {
   display: flex;
-  gap: 50px;
+  justify-content: space-between;
+  width: 100%;
   user-select: none;
   font-weight: bold;
-  height: 25px;
+  height: 1em;
 }
 
 .player .ships {
@@ -167,24 +247,164 @@ h2 {
   color: lightblue;
 }
 
+h2 {
+  margin: 0;
+}
+
 .placed {
   font-size: 1rem;
-  color: rgb(58, 58, 136);
+  color: rgb(152, 152, 152);
   user-select: none;
   cursor: default;
 }
 
 .sunk {
   font-size: 1rem;
-  color: rgb(187, 107, 107);
+  color: #FD8DAF;
   user-select: none;
   cursor: default;
 }
 
 .hoverValid {
-  background: lightblue;
+  background: #9C9EE2;
 }
 
 .hoverInvalid {
-  background: lightcoral;
+  background: rgb(216, 155, 155);
+}
+
+.cpu-active-space {
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.cpu-active-space:hover {
+  background: #ACACAC;
+}
+
+.hit-dot {
+  height: 0.75em;
+  width: 0.75em;
+  background: #C04343;
+  border-radius: 100%;
+}
+
+.player-ship-dot {
+  height: 0.75em;
+  width: 0.75em;
+  background: #371F7E;
+  border-radius: 100%;
+}
+
+.footer {
+  background: #302B27;
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .space {
+    height: 1.75em;
+    width: 1.75em;
+  }
+
+  .ships {
+    font-size: 0.8rem;
+  }
+
+  .direction-change {
+    height: fit-content;
+  }
+
+  .direction-change *,
+  .placed,
+  .results-container {
+    font-size: 0.9rem !important;
+  }
+
+  .select {
+    font-size: 1rem !important;
+  }
+
+  .game-container {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .results-container {
+    margin-bottom: auto;
+    align-self: flex-start;
+  }
+
+  .footer {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .header {
+    font-size: 1.2rem;
+  }
+
+  .game-container {
+    flex-direction: column-reverse;
+    gap: 0.25em;
+    margin-top: auto;
+  }
+
+  .space {
+    height: 1.6em;
+    width: 1.6em;
+    border-width: 0.25px;
+  }
+
+  .information {
+    padding-top: 0.25em;
+    gap: 0.5em;
+  }
+
+  .player-instruction {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 0.9rem;
+  }
+
+  .results-container {
+    width: 50%;
+    height: 8em;
+    margin-bottom: 1em;
+  }
+
+  .direction-change *,
+  .placed,
+  .results-container {
+    font-size: 0.7rem !important;
+  }
+
+  .direction-change {
+    gap: 0.25em;
+    width: 80%
+  }
+
+  .results {
+    text-align: center;
+  }
+
+  .player,
+  .cpu {
+    border-top: 5px solid lightblue;
+  }
+
+  .ships,
+  .sunk {
+    font-size: 0.7rem;
+  }
+
+  #new-game {
+    padding: 0.2em 1em;
+    font-size: 1.2rem;
+  }
 }
