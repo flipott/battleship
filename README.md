@@ -1,7 +1,14 @@
-# battleship
+# Sea Battle
 
-Live page viewable at https://flipott.github.io/battleship/
+A remake of the iconic board game using pure HTML, CSS, and JavaScript. This project showcases the use of JavaScript factory functions in order to create a fully functional game.
 
-Built with HTML, CSS, and JavaScript.
+Live page viewable here: https://flipott.github.io/battleship/
 
-Project was designed using test-driven development and bundled with webpack.
+# Features
+- Play against a basic AI opponent
+- Place fleet manually or randomly generate a formation
+- Game log details all events that happen within a game
+- Responsive design
+
+# Tools Used
+[![My Skills](https://skillicons.dev/icons?i=html,css,js,webpack)](https://skillicons.dev)
